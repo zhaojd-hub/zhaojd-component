@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.zhaojd.component</groupId>
+    <artifactId>zhaojd-component</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <description>微服务框架</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <zhaojd-component.version>0.0.1-SNAPSHOT</zhaojd-component.version>
+
+        <springboot.version>2.3.12.RELEASE</springboot.version>
+        <springcloud.version>Hoxton.SR12</springcloud.version>
+        <fastjson.version>1.2.60</fastjson.version>
+        <swagger.version>2.10.5</swagger.version>
+        <knife4j.version>2.0.9</knife4j.version>
+        <swagger-ui-layer.version>1.1.3</swagger-ui-layer.version>
+        <guava.version>20.0</guava.version>
+        <apollo.version>1.3.0</apollo.version>
+        <commons-lang.version>2.6</commons-lang.version>
+        <commons-io.version>2.6</commons-io.version>
+        <mybatis-puls.version>3.3.0</mybatis-puls.version>
+        <velocity.version>2.1</velocity.version>
+        <hibernate-validator-version>5.3.6.Final</hibernate-validator-version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <jackson.version>2.13.0</jackson.version>
+        <dozer.version>6.5.0</dozer.version>
+        <jwt.version>3.12.0</jwt.version>
+        <dysmsapi.version>2.0.7</dysmsapi.version>
+        <cystorage-sdk-java.version>2.17.0</cystorage-sdk-java.version>
+        <commons-compress.version>1.21</commons-compress.version>
+        <easypoi-base.version>3.2.0</easypoi-base.version>
+
+        <lombok.version>1.18.8</lombok.version>
+    </properties>
+
+    <!-- 发布生产时用此profile把所有组件更新为release，覆盖上面配置 -->
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <zhaojd-component.version>1.0.0-RELEASE</zhaojd-component.version>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- 所有项目统一发布地址 -->
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>mvn-releases</id>
+            <url></url>
+        </repository>
+        <snapshotRepository>
+            <uniqueVersion>true</uniqueVersion>
+            <id>mvn-snapshots</id>
+            <url></url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <!-- jar 包下载地址 -->
+    <repositories>
+        <repository>
+            <id>mvn-repo</id>
+            <name>mvn-repo</name>
+            <url></url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+
+    <modules>
+        <module>component-cache</module>
+        <module>component-common</module>
+        <module>component-config</module>
+        <module>component-dao</module>
+        <module>component-springcloud</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgument>-parameters</compilerArgument>
+                    <testCompilerArgument>-parameters</testCompilerArgument>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 项目基础包 -->
+            <dependency>
+                <groupId>org.zhaojd.component</groupId>
+                <artifactId>component-cache</artifactId>
+                <version>${zhaojd-component.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.zhaojd.component</groupId>
+                <artifactId>component-common</artifactId>
+                <version>${zhaojd-component.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.zhaojd.component</groupId>
+                <artifactId>component-config</artifactId>
+                <version>${zhaojd-component.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.zhaojd.component</groupId>
+                <artifactId>component-dao</artifactId>
+                <version>${zhaojd-component.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.zhaojd.component</groupId>
+                <artifactId>component-springcloud</artifactId>
+                <version>${zhaojd-component.version}</version>
+            </dependency>
+
+            <!-- springboot与springcloud版本 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${springboot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springcloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!--swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.caspar-chen</groupId>
+                <artifactId>swagger-ui-layer</artifactId>
+                <version>${swagger-ui-layer.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <!-- mybatis plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-puls.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-puls.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <!-- apollo -->
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-client</artifactId>
+                <version>${apollo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ctrip.framework.apollo</groupId>
+                <artifactId>apollo-core</artifactId>
+                <version>${apollo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!--    jackson start    -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-guava</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <!--    jackson end  -->
+
+            <dependency>
+                <groupId>com.github.dozermapper</groupId>
+                <artifactId>dozer-core</artifactId>
+                <version>${dozer.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${dysmsapi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.cycore.cystorage.sdk</groupId>
+                <artifactId>cystorage-sdk-java</artifactId>
+                <version>${cystorage-sdk-java.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${commons-compress.version}</version>
+            </dependency>
+
+            <!-- Excel -->
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-base</artifactId>
+                <version>${easypoi-base.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>
